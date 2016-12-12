@@ -152,7 +152,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         override var isSelected: Bool {
             didSet {
                 if super.isSelected {
-                    self.videoInfoView.backgroundColor = UIColor(red: 20 / 255, green: 129 / 255, blue: 252 / 255, alpha: 1)
+                    self.videoInfoView.backgroundColor = UIColor(red: 180 / 255, green: 28 / 255, blue: 51 / 255, alpha: 1)
                 } else {
                     self.videoInfoView.backgroundColor = UIColor(white: 0.0, alpha: 0.7)
                 }

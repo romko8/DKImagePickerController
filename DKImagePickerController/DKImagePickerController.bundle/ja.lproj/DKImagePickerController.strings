@@ -26,6 +26,10 @@
 
 "done" = "完了";
 
+"cancel" = "Cancel";
+
 "maxLimitReached" = "選択可能枚数に到達しました";
 
 "maxLimitReachedMessage" = "%ld 枚まで選択することができます";
+
+"tapHereToChange" = "Tap here to change";

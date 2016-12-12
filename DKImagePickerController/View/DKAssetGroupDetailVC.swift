@@ -71,7 +71,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         class DKImageCheckView: UIView {
 
             internal lazy var checkImageView: UIImageView = {
-                let imageView = UIImageView(image: DKImageResource.checkedImage().withRenderingMode(.alwaysTemplate))
+                let imageView = UIImageView(image: DKImageResource.checkedImage())
                 return imageView
             }()
             
@@ -198,7 +198,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         }
         
     } /* DKVideoAssetCell */
-	
+    fileprivate var headerView: UIView?
     fileprivate lazy var selectGroupButton: UIButton = {
         let button = UIButton()
 		
@@ -308,21 +308,54 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 		self.updateTitleView()
 		self.collectionView!.reloadData()
     }
-	
+    
 	func updateTitleView() {
 		let group = getImageManager().groupDataManager.fetchGroupWithGroupId(self.selectedGroupId!)
-		self.title = group.groupName
-		
 		let groupsCount = getImageManager().groupDataManager.groupIds?.count ?? 0
-		self.selectGroupButton.setTitle(group.groupName + (groupsCount > 1 ? "  \u{25be}" : "" ), for: .normal)
-		self.selectGroupButton.sizeToFit()
-		self.selectGroupButton.isEnabled = groupsCount > 1
-		
-		self.navigationItem.titleView = self.selectGroupButton
+
+        let titleLabel = UILabel.init(frame: CGRect.zero)
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        titleLabel.text = group.groupName
+        titleLabel.sizeToFit()
+        
+        
+        let subTitleLabel = UILabel.init(frame: CGRect.init(x: 0, y: 12, width: 0, height: 0))
+        subTitleLabel.backgroundColor = UIColor.clear
+
+        let tapText = DKImageLocalizedStringWithKey("tapHereToChange")
+        let tickText = " \u{25be}"
+        let attributedString = NSMutableAttributedString(string: tapText + (groupsCount > 1 ? tickText : ""))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: (attributedString.string as NSString).range(of: tapText))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 9), range: (attributedString.string as NSString).range(of: tapText))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.gray, range: (attributedString.string as NSString).range(of: tickText))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 17), range: (attributedString.string as NSString).range(of: tickText))
+        subTitleLabel.attributedText = attributedString
+        subTitleLabel.sizeToFit()
+
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subTitleLabel.frame.size.width), height: 30))
+        headerView?.addSubview(titleLabel)
+        headerView?.addSubview(subTitleLabel)
+        
+        let gestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(DKAssetGroupDetailVC.showGroupSelector))
+        headerView?.addGestureRecognizer(gestureRecognizer)
+        
+        let widthDiff = subTitleLabel.frame.size.width - titleLabel.frame.size.width
+        
+        if widthDiff < 0 {
+            let newX = widthDiff / 2
+            subTitleLabel.frame.origin.x = abs(newX)
+        } else {
+            let newX = widthDiff / 2
+            titleLabel.frame.origin.x = newX
+        }
+        
+        self.navigationItem.titleView = headerView
 	}
     
     func showGroupSelector() {
-        DKPopoverViewController.popoverViewController(self.groupListVC, fromView: self.selectGroupButton)
+        DKPopoverViewController.popoverViewController(self.groupListVC, fromView: self.headerView!)
     }
     
     func fetchAsset(for index: Int) -> DKAsset? {

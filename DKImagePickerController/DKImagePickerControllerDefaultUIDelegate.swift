@@ -20,6 +20,8 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 	open func createDoneButton() -> UIButton {
 		let button = UIButton(type: UIButtonType.custom)
 		button.setTitleColor(UINavigationBar.appearance().tintColor ?? self.imagePickerController.navigationBar.tintColor, for: .normal)
+        button.setTitleColor(UIColor.lightGray, for: .disabled)
+        button.setTitle(DKImageLocalizedStringWithKey("done"), for: .normal)
 		button.addTarget(self.imagePickerController, action: #selector(DKImagePickerController.done), for: UIControlEvents.touchUpInside)
 		self.updateDoneButtonTitle(button)
 		
@@ -27,12 +29,7 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 	}
     
     open func updateDoneButtonTitle(_ button: UIButton) {
-        if self.imagePickerController.selectedAssets.count > 0 {
-            button.setTitle(String(format: DKImageLocalizedStringWithKey("select"), self.imagePickerController.selectedAssets.count), for: .normal)
-        } else {
-            button.setTitle(DKImageLocalizedStringWithKey("done"), for: .normal)
-        }
-        
+        button.isEnabled = self.imagePickerController.selectedAssets.count > 0
         button.sizeToFit()
     }
 	
@@ -41,6 +38,7 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 	open func prepareLayout(_ imagePickerController: DKImagePickerController, vc: UIViewController) {
 		self.imagePickerController = imagePickerController
 		vc.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
+        self.doneButton.isEnabled = false
 	}
     
 	open func imagePickerControllerCreateCamera(_ imagePickerController: DKImagePickerController,
@@ -112,7 +110,7 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
     }
     
     open func imagePickerControllerCheckedNumberColor() -> UIColor {
-        return UIColor.white
+        return UIColor.clear
     }
     
     open func imagePickerControllerCheckedNumberFont() -> UIFont {

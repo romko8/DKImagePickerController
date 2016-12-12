@@ -26,6 +26,10 @@
 
 "done" = "Tamam";
 
+"cancel" = "Cancel";
+
 "maxLimitReached" = "Maksimum fotoğraf limitine ulaştınız.";
 
 "maxLimitReachedMessage" = "%ld fotoğraf seçebilirsiniz.";
+
+"tapHereToChange" = "Tap here to change";

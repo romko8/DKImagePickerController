@@ -26,6 +26,10 @@
 
 "done" = "完成";
 
+"cancel" = "Cancel";
+
 "maxLimitReached" = "最大数限制";
 
 "maxLimitReachedMessage" = "你能选择%ld项";
+
+"tapHereToChange" = "Tap here to change";

@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		pickerController.sourceType = sourceType
 		pickerController.singleSelect = singleSelect
 		
-//		pickerController.showsCancelButton = true
+		pickerController.showsCancelButton = true
 //		pickerController.showsEmptyAlbums = false
 //		pickerController.defaultAssetGroup = PHAssetCollectionSubtype.SmartAlbumFavorites
 		

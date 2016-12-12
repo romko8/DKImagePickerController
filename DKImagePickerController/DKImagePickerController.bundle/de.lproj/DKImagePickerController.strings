@@ -26,6 +26,10 @@
 
 "done" = "Fertig";
 
+"cancel" = "Abbrechen";
+
 "maxLimitReached" = "Maximale Bilderanzahl erreicht";
 
 "maxLimitReachedMessage" = "Sie können nur %ld Fotos auswählen";
+
+"tapHereToChange" = "Tap here to change";

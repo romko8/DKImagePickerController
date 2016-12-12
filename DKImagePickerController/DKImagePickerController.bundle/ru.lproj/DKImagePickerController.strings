@@ -26,6 +26,10 @@
 
 "done" = "Готово";
 
+"cancel" = "Cancel";
+
 "maxLimitReached" = "Достигнут лимит фото";
 
 "maxLimitReachedMessage" = "Вы можете выбрать %ld фото";
+
+"tapHereToChange" = "Tap here to change";

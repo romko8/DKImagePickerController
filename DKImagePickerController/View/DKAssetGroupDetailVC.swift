@@ -206,7 +206,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 	
 	fileprivate var groupListVC: DKAssetGroupListVC!
     
-    fileprivate var hidesCamera: Bool = false
+    public var hidesCamera: Bool = false
 	
 	internal var collectionView: UICollectionView!
     

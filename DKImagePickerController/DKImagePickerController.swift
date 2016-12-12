@@ -344,10 +344,13 @@ open class DKImagePickerController : UINavigationController {
                  DispatchQueue.main.async(execute: {
                      if success {
                          if let newAsset = PHAsset.fetchAssets(withLocalIdentifiers: [newImageIdentifier], options: nil).firstObject {
-                             if self.sourceType != .camera || self.viewControllers.count == 0 {
-                                 self.dismiss(animated: true, completion: nil)
-                             }
-                             self.selectImage(DKAsset(originalAsset: newAsset))
+                            if let rootVC = self.viewControllers.first as? DKAssetGroupDetailVC {
+                                rootVC.hidesCamera = true
+                            }
+                            if self.sourceType != .camera || self.viewControllers.count == 0 {
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                            self.selectImage(DKAsset(originalAsset: newAsset))
                          }
                      } else {
                          if self.sourceType != .camera {
@@ -430,17 +433,11 @@ open class DKImagePickerController : UINavigationController {
     }
     
 	internal func selectImage(_ asset: DKAsset) {
-        if self.singleSelect {
-            self.deselectAllAssets()
-            self.selectedAssets.append(asset)
+        self.selectedAssets.append(asset)
+        if self.sourceType == .camera {
             self.done()
         } else {
-            self.selectedAssets.append(asset)
-            if self.sourceType == .camera {
-                self.done()
-            } else {
-                self.UIDelegate.imagePickerController(self, didSelectAssets: [asset])
-            }
+            self.UIDelegate.imagePickerController(self, didSelectAssets: [asset])
         }
 	}
 	

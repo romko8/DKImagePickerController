@@ -433,11 +433,17 @@ open class DKImagePickerController : UINavigationController {
     }
     
 	internal func selectImage(_ asset: DKAsset) {
-        self.selectedAssets.append(asset)
-        if self.sourceType == .camera {
+        if self.singleSelect {
+            self.deselectAllAssets()
+            self.selectedAssets.append(asset)
             self.done()
         } else {
-            self.UIDelegate.imagePickerController(self, didSelectAssets: [asset])
+            self.selectedAssets.append(asset)
+            if self.sourceType == .camera {
+                self.done()
+            } else {
+                self.UIDelegate.imagePickerController(self, didSelectAssets: [asset])
+            }
         }
 	}
 	

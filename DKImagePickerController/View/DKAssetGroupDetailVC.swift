@@ -243,8 +243,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 		if let footerView = self.footerView {
 			self.view.addSubview(footerView)
 		}
-		
-		self.hidesCamera = self.imagePickerController.sourceType == .photo
+        
 		self.checkPhotoPermission()
     }
     

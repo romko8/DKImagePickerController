@@ -266,7 +266,7 @@ open class DKImagePickerController : UINavigationController {
                 self.isNavigationBarHidden = false
 				let rootVC = DKAssetGroupDetailVC()
                 rootVC.imagePickerController = self
-                
+                rootVC.hidesCamera = self.assetType == .allVideos
 				self.UIDelegate.prepareLayout(self, vc: rootVC)
 				self.updateCancelButtonForVC(rootVC)
 				self.setViewControllers([rootVC], animated: false)

@@ -250,7 +250,7 @@ open class DKCamera: UIViewController {
         cancelButton.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin]
         contentView.addSubview(cancelButton)
         
-        self.flashButton.frame.origin = CGPoint(x: 5, y: 15)
+        self.flashButton.frame.origin = CGPoint(x: 15, y: 25)        
         contentView.addSubview(self.flashButton)
         
         contentView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(DKCamera.handleZoom(_:))))

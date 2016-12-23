@@ -33,7 +33,7 @@ public class DKImageResource {
 	}
 	
     class func checkedImage() -> UIImage {
-		return stretchImgFromMiddle(imageForResource("checked_background"))
+		return stretchImgFromMiddle(imageForResource("checked_background").withRenderingMode(.alwaysTemplate))
     }
     
     class func blueTickImage() -> UIImage {
@@ -41,7 +41,7 @@ public class DKImageResource {
     }
     
     class func cameraImage() -> UIImage {
-        return imageForResource("camera")
+        return imageForResource("camera").withRenderingMode(.alwaysTemplate)
     }
     
     class func videoCameraIcon() -> UIImage {

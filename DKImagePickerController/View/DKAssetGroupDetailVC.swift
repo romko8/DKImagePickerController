@@ -34,6 +34,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
     class DKImageCameraCell: UICollectionViewCell {
         
         var didCameraButtonClicked: (() -> Void)?
+        var controlsColor = UIColor.blue
 		
 		private weak var cameraButton: UIButton!
 		
@@ -55,6 +56,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 		
 		func setCameraImage(_ cameraImage: UIImage) {
 			self.cameraButton.setImage(cameraImage, for: .normal)
+            self.cameraButton.tintColor = controlsColor
 		}
 		
         func cameraButtonClicked() {
@@ -103,7 +105,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         } /* DKImageCheckView */
 		
         weak var asset: DKAsset!
-		
+        
         fileprivate lazy var thumbnailImageView: UIImageView = {
             let thumbnailImageView = UIImageView()
             thumbnailImageView.contentMode = .scaleAspectFill
@@ -113,6 +115,12 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         }()
         
         fileprivate let checkView = DKImageCheckView()
+        
+        var controlsColor:UIColor = UIColor.blue {
+            didSet {
+                self.checkView.tintColor = controlsColor
+            }
+        }
         
         override var isSelected: Bool {
             didSet {
@@ -139,8 +147,8 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
     } /* DKAssetCell */
     
     class DKVideoAssetCell: DKAssetCell {
-		
-		override var asset: DKAsset! {
+
+        override var asset: DKAsset! {
 			didSet {
 				let videoDurationLabel = self.videoInfoView.viewWithTag(-1) as! UILabel
 				let minutes: Int = Int(asset.duration!) / 60
@@ -152,7 +160,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         override var isSelected: Bool {
             didSet {
                 if super.isSelected {
-                    self.videoInfoView.backgroundColor = UIColor(red: 180 / 255, green: 28 / 255, blue: 51 / 255, alpha: 1)
+                    self.videoInfoView.backgroundColor = super.controlsColor//UIColor(red: 180 / 255, green: 28 / 255, blue: 51 / 255, alpha: 1)
                 } else {
                     self.videoInfoView.backgroundColor = UIColor(white: 0.0, alpha: 0.7)
                 }
@@ -358,6 +366,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 
     func cameraCellForIndexPath(_ indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView!.dequeueReusableCell(withReuseIdentifier: DKImageCameraIdentifier, for: indexPath) as! DKImageCameraCell
+        cell.controlsColor = self.imagePickerController.controlsTintColor
 		cell.setCameraImage(self.imagePickerController.UIDelegate.imagePickerControllerCameraImage())
         
         cell.didCameraButtonClicked = { [unowned self] in
@@ -386,11 +395,10 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 			identifier = DKImageAssetIdentifier
 		}
 		
-		cell = self.collectionView!.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DKAssetCell
-        cell.checkView.checkImageView.tintColor = self.imagePickerController.UIDelegate.imagePickerControllerCheckedImageTintColor()
+        cell = self.collectionView!.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DKAssetCell
         cell.checkView.checkLabel.font = self.imagePickerController.UIDelegate.imagePickerControllerCheckedNumberFont()
         cell.checkView.checkLabel.textColor = self.imagePickerController.UIDelegate.imagePickerControllerCheckedNumberColor()
-
+        cell.controlsColor = self.imagePickerController.controlsTintColor
         cell.asset = asset
 		let tag = indexPath.row + 1
 		cell.tag = tag

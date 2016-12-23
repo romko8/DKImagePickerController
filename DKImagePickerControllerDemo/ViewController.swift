@@ -41,7 +41,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		pickerController.allowMultipleTypes = allowMultipleType
 		pickerController.sourceType = sourceType
 		pickerController.singleSelect = singleSelect
-		
+		pickerController.controlsTintColor = UIColor.red
 		pickerController.showsCancelButton = true
 //		pickerController.showsEmptyAlbums = false
 //		pickerController.defaultAssetGroup = PHAssetCollectionSubtype.SmartAlbumFavorites
